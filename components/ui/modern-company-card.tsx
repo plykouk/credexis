@@ -25,23 +25,23 @@ export function ModernCompanyCard({ company }: ModernCompanyCardProps) {
       <Card className="group h-full border-gray-200 bg-white transition-all hover:shadow-lg">
         <CardContent className="p-6">
           <div className="mb-4 flex items-start justify-between">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-100 text-orange-600">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-100 text-brand-700">
               <Building2 className="h-6 w-6" />
             </div>
-            <span className={`rounded-full px-3 py-1 text-xs font-medium ${badgeClass}`}>
+            <span className={`rounded-full px-3 py-1 text-sm font-medium ${badgeClass}`}>
               {company.company_status}
             </span>
           </div>
 
-          <h3 className="mb-2 line-clamp-2 text-lg font-semibold text-gray-900 group-hover:text-orange-600">
+          <h3 className="mb-2 line-clamp-2 text-lg font-semibold text-gray-900 group-hover:text-brand">
             {company.title}
           </h3>
 
-          <p className="mb-4 font-mono text-sm text-gray-500">
+          <p className="mb-4 font-mono text-base text-gray-500">
             {company.company_number}
           </p>
 
-          <div className="space-y-2 text-sm text-gray-600">
+          <div className="space-y-2 text-base text-gray-600">
             {company.address && (
               <div className="flex items-start gap-2">
                 <MapPin className="mt-0.5 h-4 w-4 text-gray-400" />
@@ -55,7 +55,7 @@ export function ModernCompanyCard({ company }: ModernCompanyCardProps) {
             </div>
           </div>
 
-          <div className="mt-4 flex items-center text-sm font-medium text-orange-600 opacity-0 transition-opacity group-hover:opacity-100">
+          <div className="mt-4 flex items-center text-base font-medium text-brand opacity-0 transition-opacity group-hover:opacity-100">
             View details
             <ArrowRight className="ml-1 h-4 w-4" />
           </div>

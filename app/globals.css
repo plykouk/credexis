@@ -1,50 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
-@theme {
-  --color-background: hsl(0 0% 100%);
-  --color-foreground: hsl(0 0% 0%);
-  --color-card: hsl(0 0% 100%);
-  --color-card-foreground: hsl(0 0% 0%);
-  --color-popover: hsl(0 0% 100%);
-  --color-popover-foreground: hsl(0 0% 0%);
-  --color-primary: hsl(142 71% 25%);
-  --color-primary-foreground: hsl(0 0% 98%);
-  --color-secondary: hsl(240 4.8% 95.9%);
-  --color-secondary-foreground: hsl(0 0% 0%);
-  --color-muted: hsl(240 4.8% 95.9%);
-  --color-muted-foreground: hsl(240 3.8% 35%);
-  --color-accent: hsl(142 71% 25%);
-  --color-accent-foreground: hsl(0 0% 98%);
-  --color-destructive: hsl(0 84.2% 60.2%);
-  --color-destructive-foreground: hsl(0 0% 98%);
-  --color-border: hsl(240 5.9% 90%);
-  --color-input: hsl(240 5.9% 90%);
-  --color-ring: hsl(142 71% 25%);
-  --radius: 0.5rem;
-}
-
 @layer base {
   :root {
+    --brand-rgb: 220, 121, 87;
     --background: 0 0% 100%;
     --foreground: 0 0% 0%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 0%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 0%;
-    --primary: 142 71% 25%;
+    --primary: 15 66% 60%;
     --primary-foreground: 0 0% 98%;
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 0 0% 0%;
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 35%;
-    --accent: 142 71% 25%;
+    --accent: 15 66% 60%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
-    --ring: 142 71% 25%;
+    --ring: 15 66% 60%;
     --radius: 0.5rem;
   }
 
@@ -55,28 +33,28 @@
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 142 71% 25%;
+    --primary: 15 66% 60%;
     --primary-foreground: 0 0% 98%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
-    --accent: 142 71% 25%;
+    --accent: 15 66% 60%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 142 71% 25%;
+    --ring: 15 66% 60%;
   }
 
   * {
-    border-color: var(--color-border);
+    border-color: hsl(var(--border));
   }
 
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
     font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -85,5 +63,38 @@
   h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
     letter-spacing: -0.025em;
+  }
+
+  h1, h2, h3, h4, h5 {
+    color: hsl(var(--primary));
+  }
+}
+
+@layer utilities {
+  .bg-brand,
+  .bg-brand-500 {
+    background-color: rgb(var(--brand-rgb)) !important;
+  }
+
+  .bg-brand-50,
+  .bg-brand-100 {
+    background-color: rgba(var(--brand-rgb), 0.1) !important;
+  }
+
+  .bg-brand-200 {
+    background-color: rgba(var(--brand-rgb), 0.18) !important;
+  }
+
+  .bg-brand-300 {
+    background-color: rgba(var(--brand-rgb), 0.25) !important;
+  }
+
+  .hover\:bg-brand-600:hover {
+    background-color: #bb674a !important;
+  }
+
+  .hover\:bg-brand-100:hover,
+  .group:hover .group-hover\:bg-brand-100 {
+    background-color: rgba(var(--brand-rgb), 0.12) !important;
   }
 }

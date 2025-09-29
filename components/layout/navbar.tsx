@@ -11,8 +11,8 @@ export function Navbar() {
   const navLinks = [
     { href: '/', label: 'Home' },
     { href: '/search', label: 'Search Companies' },
+    { href: '/pricing', label: 'Pricing' },
     { href: '#features', label: 'Features' },
-    { href: '#about', label: 'About' },
   ]
 
   return (
@@ -20,8 +20,8 @@ export function Navbar() {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <Image src="/credexis-logo.svg" alt="Credexis" width={32} height={32} priority />
-            <span className="text-xl font-semibold text-gray-900">Credexis</span>
+            <Image src="/credexis-logo.svg" alt="Credexis" width={40} height={40} priority />
+            <span className="text-xl font-semibold text-brand">Credexis</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
@@ -29,7 +29,7 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-gray-900 ${
+                className={`text-base font-medium transition-colors hover:text-gray-900 ${
                   pathname === link.href ? 'text-gray-900' : 'text-gray-600'
                 }`}
               >
@@ -39,10 +39,10 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm" className="hidden md:inline-flex">
+            <Button variant="ghost" size="default" className="hidden md:inline-flex hover:bg-brand-50 hover:text-brand">
               Sign In
             </Button>
-            <Button size="sm" className="bg-gray-900 text-white hover:bg-gray-800">
+            <Button size="default">
               Get Started
             </Button>
           </div>

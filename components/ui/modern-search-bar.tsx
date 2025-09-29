@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { Search, Building2, Hash, Briefcase } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 
@@ -62,7 +61,7 @@ export function ModernSearchBar({
   }
 
   const containerClasses = layout === 'hero'
-    ? 'rounded-2xl bg-white border border-gray-200 p-6 shadow-xl'
+    ? 'rounded-2xl bg-white border border-gray-200 p-8 shadow-2xl'
     : layout === 'light'
     ? 'rounded-2xl bg-white border border-gray-200 p-4 shadow-sm'
     : layout === 'stacked'
@@ -70,29 +69,29 @@ export function ModernSearchBar({
     : 'rounded-3xl border border-slate-200/70 bg-white/90 p-4 shadow-[0_15px_35px_-25px_rgba(15,23,42,0.55)] backdrop-blur'
 
   const inputClasses = layout === 'hero'
-    ? 'h-14 w-full rounded-xl border border-gray-200 bg-white pl-14 pr-4 text-lg text-gray-900 placeholder-gray-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20'
+    ? 'h-20 w-full rounded-xl border-2 border-gray-200 bg-white pl-16 pr-6 text-[1.25rem] text-gray-900 placeholder-gray-500 focus:!border-brand focus:outline-none focus:!ring-4 focus:!ring-brand/20 focus-visible:!border-brand focus-visible:!ring-brand/20'
     : layout === 'light'
-    ? 'h-12 w-full rounded-xl border border-gray-200 bg-gray-50 pl-12 pr-4 text-base text-gray-900 placeholder-gray-500 focus:bg-white focus:border-blue-500 focus-visible:ring-0'
+    ? 'h-12 w-full rounded-xl border border-gray-200 bg-gray-50 pl-12 pr-4 text-base text-gray-900 placeholder-gray-500 focus:bg-white focus:!border-brand focus-visible:!ring-0 focus-visible:!border-brand'
     : layout === 'stacked'
-    ? 'h-12 w-full rounded-2xl border-none bg-white/80 pl-12 pr-4 text-base text-slate-900 shadow-sm focus-visible:ring-2 focus-visible:ring-emerald-500'
-    : 'h-12 w-full rounded-full border-none bg-slate-100/60 pl-12 pr-4 text-base text-slate-900 shadow-inner focus-visible:ring-2 focus-visible:ring-emerald-500'
+    ? 'h-12 w-full rounded-2xl border-none bg-white/80 pl-12 pr-4 text-base text-slate-900 shadow-sm focus-visible:!ring-2 focus-visible:!ring-brand focus-visible:!border-brand'
+    : 'h-12 w-full rounded-full border-none bg-slate-100/60 pl-12 pr-4 text-base text-slate-900 shadow-inner focus-visible:!ring-2 focus-visible:!ring-brand focus-visible:!border-brand'
 
   const buttonClasses = layout === 'hero'
-    ? 'h-14 w-full sm:w-auto rounded-xl bg-orange-600 px-8 text-white text-base font-medium transition hover:bg-orange-700'
+    ? 'h-20 w-full sm:w-auto rounded-xl bg-brand px-12 text-white text-lg font-medium transition hover:bg-brand-600 flex items-center justify-center'
     : layout === 'light'
-    ? 'h-12 w-full rounded-xl bg-blue-600 text-white text-base font-medium transition hover:bg-blue-700'
+    ? 'h-12 w-full sm:w-auto rounded-xl bg-brand text-white text-base font-medium transition hover:bg-brand-600 px-6 flex items-center justify-center'
     : layout === 'stacked'
-    ? 'h-12 w-full rounded-2xl bg-gradient-to-r from-emerald-500 to-green-600 text-base font-semibold shadow-[0_20px_40px_-25px_rgba(16,185,129,0.8)] transition hover:from-emerald-600 hover:to-green-700'
-    : 'h-12 w-full rounded-full bg-gradient-to-r from-emerald-500 to-green-600 text-base font-semibold shadow-[0_10px_30px_-15px_rgba(16,185,129,0.9)] transition hover:from-emerald-600 hover:to-green-700'
+    ? 'h-12 w-full rounded-2xl bg-brand text-base text-white font-semibold shadow-[0_20px_40px_-25px_rgba(220,121,87,0.8)] transition hover:bg-brand-600 flex items-center justify-center'
+    : 'h-12 w-full rounded-full bg-brand text-base text-white font-semibold shadow-[0_10px_30px_-15px_rgba(220,121,87,0.9)] transition hover:bg-brand-600 flex items-center justify-center'
 
   const typeButtonClasses = layout === 'hero'
     ? {
-        active: 'border-orange-600 bg-orange-50 text-orange-600',
+        active: 'border-brand bg-brand-50 text-brand',
         inactive: 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50'
       }
     : layout === 'light'
     ? {
-        active: 'border-blue-600 bg-blue-50 text-blue-600',
+        active: 'border-brand bg-brand-50 text-brand',
         inactive: 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50'
       }
     : layout === 'stacked'
@@ -109,10 +108,10 @@ export function ModernSearchBar({
 
   return (
     <form onSubmit={handleSubmit} className={cn('w-full', className)}>
-      <div className={containerClasses}>
-        <div className={layout === 'hero' ? 'flex flex-col gap-4 sm:flex-row sm:gap-3' : 'flex flex-col gap-3'}>
+      <div className={cn(containerClasses, layout === 'hero' ? 'mb-16' : '')}>
+        <div className={layout === 'hero' ? 'flex flex-col gap-4 sm:flex-row sm:gap-3' : layout === 'light' ? 'flex gap-3' : 'flex flex-col gap-3'}>
           <div className="relative w-full">
-            <Search className={cn('pointer-events-none absolute left-4 top-1/2 -translate-y-1/2', layout === 'hero' ? 'h-5 w-5 text-gray-400' : 'h-4 w-4', layout === 'light' || layout === 'hero' ? 'text-gray-400' : 'text-slate-400')} />
+            <Search className={cn('pointer-events-none absolute left-5 top-1/2 -translate-y-1/2', layout === 'hero' ? 'h-6 w-6 text-brand' : 'h-4 w-4', layout === 'light' || layout === 'hero' ? 'text-gray-400' : 'text-slate-400')} />
             <Input
               type="text"
               value={query}
@@ -121,9 +120,9 @@ export function ModernSearchBar({
               className={inputClasses}
             />
           </div>
-          <Button type="submit" className={buttonClasses}>
+          <button type="submit" className={buttonClasses}>
             Search
-          </Button>
+          </button>
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2">
@@ -137,7 +136,7 @@ export function ModernSearchBar({
                 type="button"
                 onClick={() => setSearchType(type.value)}
                 className={cn(
-                  'flex items-center gap-2 rounded-lg border px-3.5 py-1.5 text-sm font-medium transition',
+                  'flex items-center gap-2 rounded-lg border px-3.5 py-1.5 text-base font-medium transition',
                   isActive ? typeButtonClasses.active : typeButtonClasses.inactive
                 )}
               >

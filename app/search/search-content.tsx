@@ -35,7 +35,7 @@ export default function SearchPageContent() {
       <div className="border-b border-gray-200 bg-white">
         <div className="container mx-auto px-4 py-8 lg:px-8">
           <div className="mx-auto max-w-4xl">
-            <h1 className="mb-6 text-3xl font-bold text-gray-900">Company Search</h1>
+            <h1 className="mb-6 text-3xl font-semibold text-brand">Company Search</h1>
             <ModernSearchBar
               onSearch={handleSearch}
               defaultSearchType={searchType}
@@ -65,10 +65,10 @@ export default function SearchPageContent() {
             <>
               <div className="mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
                 <div>
-                  <h2 className="text-2xl font-semibold text-gray-900">
+                  <h2 className="text-2xl font-semibold text-brand">
                     Search Results
                   </h2>
-                  <p className="mt-1 text-gray-600">
+                  <p className="mt-1 text-lg text-gray-600">
                     Found {data.total_results.toLocaleString()} companies
                     {searchType === 'sic_code' && ` with SIC code "${searchQuery}"`}
                     {searchType === 'nature_of_business' && ` for "${searchQuery}"`}
@@ -82,7 +82,7 @@ export default function SearchPageContent() {
                       <Filter className="h-4 w-4" />
                       Filter
                     </Button>
-                    <div className="rounded-lg bg-gray-100 px-3 py-1.5 text-sm text-gray-600">
+                    <div className="rounded-lg bg-brand-50 px-3 py-1.5 text-base text-brand-700">
                       {data.items.length} of {data.total_results.toLocaleString()}
                     </div>
                   </div>
@@ -91,11 +91,11 @@ export default function SearchPageContent() {
 
               {data.items.length === 0 ? (
                 <div className="mx-auto max-w-md py-16 text-center">
-                  <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
+                  <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-brand-50">
                     <Search className="h-8 w-8 text-gray-400" />
                   </div>
-                  <h3 className="mb-2 text-xl font-semibold text-gray-900">No companies found</h3>
-                  <p className="text-gray-600">
+                  <h3 className="mb-2 text-xl font-semibold text-brand">No companies found</h3>
+                  <p className="text-lg text-gray-600">
                     Try adjusting your search terms or using a different search type.
                   </p>
                 </div>
@@ -109,10 +109,10 @@ export default function SearchPageContent() {
 
               {data.total_results > data.items.length && (
                 <div className="mt-12 text-center">
-                  <p className="text-sm text-gray-500">
+                  <p className="text-base text-gray-500">
                     Showing {data.items.length} of {data.total_results.toLocaleString()} results
                   </p>
-                  <Button className="mt-4 bg-orange-600 hover:bg-orange-700">
+                  <Button className="mt-4">
                     Load More
                   </Button>
                 </div>
