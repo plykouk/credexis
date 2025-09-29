@@ -1,103 +1,163 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { ModernSearchBar, SearchType } from '@/components/ui/modern-search-bar'
+import { Card, CardContent } from '@/components/ui/card'
+import { Building2, TrendingUp, FileText, Users, Search, BarChart3, Shield, Zap } from 'lucide-react'
+
+export default function HomePage() {
+  const router = useRouter()
+
+  const handleSearch = (query: string, searchType: SearchType) => {
+    router.push(`/search?q=${encodeURIComponent(query)}&search_type=${searchType}`)
+  }
+
+  const features = [
+    {
+      icon: Building2,
+      title: 'Company Profiles',
+      description: 'Detailed information about UK companies',
+      color: 'from-blue-500 to-blue-600'
+    },
+    {
+      icon: FileText,
+      title: 'Filing History',
+      description: 'Annual accounts and returns',
+      color: 'from-purple-500 to-purple-600'
+    },
+    {
+      icon: TrendingUp,
+      title: 'Financial Data',
+      description: 'Performance analysis',
+      color: 'from-green-500 to-green-600'
+    },
+    {
+      icon: Users,
+      title: 'Directors',
+      description: 'Key personnel information',
+      color: 'from-orange-500 to-orange-600'
+    }
+  ]
+
+  const stats = [
+    { label: 'Companies', value: '5M+', icon: Building2 },
+    { label: 'Documents', value: '100M+', icon: FileText },
+    { label: 'Updates Daily', value: '50K+', icon: Zap },
+  ]
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="flex flex-col">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50">
+        <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] -z-10" />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-20">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs sm:text-sm font-medium mb-4">
+              <Shield className="h-3.5 w-3.5" />
+              Official Companies House Data
+            </div>
+
+            <h1 className="text-3xl sm:text-5xl font-bold text-slate-900 mb-4 leading-tight">
+              UK Company Information
+              <span className="block text-blue-600 mt-1">at Your Fingertips</span>
+            </h1>
+
+            <p className="text-base sm:text-xl text-slate-600 mb-8 max-w-2xl mx-auto">
+              Search millions of UK companies. Access financial accounts, filing history, and director information instantly.
+            </p>
+
+            <div className="max-w-2xl mx-auto mb-8">
+              <ModernSearchBar onSearch={handleSearch} />
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-lg mx-auto mt-12">
+              {stats.map((stat) => {
+                const Icon = stat.icon
+                return (
+                  <div key={stat.label} className="text-center">
+                    <div className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-slate-100 mb-2">
+                      <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-slate-700" />
+                    </div>
+                    <div className="text-xl sm:text-2xl font-bold text-slate-900">{stat.value}</div>
+                    <div className="text-xs sm:text-sm text-slate-500">{stat.label}</div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-12 sm:py-16 bg-white">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
+              Everything You Need
+            </h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">
+              Comprehensive company data from the official UK register
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
+            {features.map((feature, index) => {
+              const Icon = feature.icon
+              return (
+                <Card key={index} className="border-slate-200 hover:shadow-lg transition-shadow">
+                  <CardContent className="p-4 sm:p-6">
+                    <div className={`inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br ${feature.color} mb-3`}>
+                      <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                    </div>
+                    <h3 className="font-semibold text-sm sm:text-base text-slate-900 mb-1">
+                      {feature.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Search Examples */}
+      <section className="py-12 sm:py-16 bg-gradient-to-b from-white to-slate-50">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3">
+              Popular Searches
+            </h2>
+            <p className="text-sm sm:text-base text-slate-600">
+              Quick access to well-known UK companies
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 max-w-3xl mx-auto">
+            {['Tesco PLC', 'Sainsbury\'s', 'ASDA', 'John Lewis', 'Marks & Spencer', 'British Airways', 'Vodafone', 'BP'].map((company) => (
+              <button
+                key={company}
+                onClick={() => handleSearch(company, 'name')}
+                className="px-3 sm:px-4 py-2 bg-white border border-slate-200 rounded-lg text-xs sm:text-sm text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-all"
+              >
+                {company}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <div className="inline-flex items-center gap-2 text-xs sm:text-sm text-slate-500">
+              <Search className="h-3.5 w-3.5" />
+              <span>Search by company name, SIC code, or business type</span>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-  );
+  )
 }
