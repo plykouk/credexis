@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import { MapPin, Calendar, ChevronRight } from 'lucide-react'
+import { MapPin, ChevronRight } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
-import { formatDate, formatAddress } from '@/lib/utils'
+import { formatAddress } from '@/lib/utils'
 import type { CompanySearchItem } from '@/types/companies-house'
 
 interface ModernCompanyCardProps {

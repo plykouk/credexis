@@ -7,7 +7,7 @@ import { ModernSearchBar, SearchType } from '@/components/ui/modern-search-bar'
 import { ModernCompanyCard } from '@/components/ui/modern-company-card'
 import { useAdvancedSearch } from '@/hooks/use-advanced-search'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Building2, Search, ArrowLeft } from 'lucide-react'
+import { Search, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 
 export default function SearchPageContent() {

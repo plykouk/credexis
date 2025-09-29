@@ -12,7 +12,7 @@ interface ModernSearchBarProps {
   onSearch: (query: string, searchType: SearchType) => void
   className?: string
   defaultSearchType?: SearchType
-  layout?: 'default' | 'stacked'
+  layout?: 'default' | 'stacked' | 'light'
 }
 
 const searchTypes = [

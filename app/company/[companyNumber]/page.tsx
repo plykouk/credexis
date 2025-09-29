@@ -10,8 +10,6 @@ import {
   Building2,
   MapPin,
   Calendar,
-  FileText,
-  Users,
   Loader2,
   ArrowLeft,
   ChevronRight
@@ -206,32 +204,36 @@ export default function CompanyDetailPage() {
                 </div>
               ) : filingHistory && filingHistory.items.length > 0 ? (
                 <div className="space-y-3">
-                  {filingHistory.items.map((filing) => (
-                    <Card key={filing.transaction_id} className="border-gray-200 bg-white">
-                      <CardContent className="p-4">
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            <p className="text-sm font-medium text-gray-900">{filing.description}</p>
-                            <p className="text-xs text-gray-500 mt-1">
-                              {formatDate(filing.date)}
-                              {filing.pages && ` • ${filing.pages} pages`}
-                            </p>
+                  {filingHistory.items.map((filing) => {
+                    const documentMetadata = filing.links?.document_metadata
+
+                    return (
+                      <Card key={filing.transaction_id} className="border-gray-200 bg-white">
+                        <CardContent className="p-4">
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <p className="text-sm font-medium text-gray-900">{filing.description}</p>
+                              <p className="text-xs text-gray-500 mt-1">
+                                {formatDate(filing.date)}
+                                {filing.pages && ` • ${filing.pages} pages`}
+                              </p>
+                            </div>
+                            {documentMetadata && (
+                              <button
+                                onClick={() => {
+                                  const documentUrl = `/api/companies/document?url=${encodeURIComponent(documentMetadata)}`
+                                  window.open(documentUrl, '_blank')
+                                }}
+                                className="ml-3"
+                              >
+                                <ChevronRight className="h-5 w-5 text-gray-400" />
+                              </button>
+                            )}
                           </div>
-                          {filing.links?.document_metadata && (
-                            <button
-                              onClick={() => {
-                                const documentUrl = `/api/companies/document?url=${encodeURIComponent(filing.links.document_metadata)}`
-                                window.open(documentUrl, '_blank')
-                              }}
-                              className="ml-3"
-                            >
-                              <ChevronRight className="h-5 w-5 text-gray-400" />
-                            </button>
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                        </CardContent>
+                      </Card>
+                    )
+                  })}
                 </div>
               ) : (
                 <p className="text-sm text-gray-500 text-center py-8">No filing history available</p>
