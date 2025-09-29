@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
     console.error('Document API Error:', error)
 
     if (error instanceof Error && 'response' in error) {
-      const axiosError = error as any
+      const axiosError = error as { response?: { status?: number } }
       if (axiosError.response?.status === 404) {
         return NextResponse.json(
           { error: 'Document not found' },
