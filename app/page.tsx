@@ -63,14 +63,9 @@ export default function HomePage() {
               Official Companies House partner experience
             </div>
 
-            <div className="space-y-3">
-              <h1 className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
-                Your mobile command centre for UK company data
-              </h1>
-              <p className="text-sm text-white/70 sm:text-base">
-                Discover verified filings, directors, and financial insights crafted for small screens and quick decisions.
-              </p>
-            </div>
+            <h1 className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+              Your mobile command centre for UK company data
+            </h1>
 
             <div className="rounded-[32px] border border-white/10 bg-white/5 p-1.5 text-left backdrop-blur-lg">
               <div className="rounded-[28px] border border-white/10 bg-white/5 p-5">
@@ -78,14 +73,11 @@ export default function HomePage() {
                   <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/20 text-emerald-200">
                     <Sparkles className="h-5 w-5" />
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-white">Search across millions of UK companies</p>
-                    <p className="mt-1 text-xs text-white/60">Smart filters, adaptive insights, and instant filing access.</p>
-                  </div>
+                  <p className="text-sm font-medium text-white">Search across millions of UK companies</p>
                 </div>
 
                 <div className="mt-6">
-                  <ModernSearchBar onSearch={handleSearch} />
+                  <ModernSearchBar onSearch={handleSearch} layout="stacked" />
                   <div className="mt-4 flex flex-wrap justify-center gap-2">
                     {quickSuggestions.map((item) => (
                       <button
@@ -120,31 +112,28 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="relative -mt-10 rounded-t-[36px] bg-white px-4 pb-16 pt-12 shadow-[0_-30px_60px_-35px_rgba(15,23,42,0.35)] sm:px-6">
+      <section className="relative -mt-10 px-4 pb-16 pt-12 sm:px-6">
         <div className="mx-auto max-w-5xl">
-          <div className="mb-10 text-center">
-            <h2 className="text-2xl font-semibold text-slate-900 sm:text-3xl">Everything you need, beautifully organised</h2>
-            <p className="mt-2 text-sm text-slate-600 sm:text-base">
-              Tailored for quick swipes, taps, and confident decisions on the go.
-            </p>
+          <div className="mb-8 text-center">
+            <h2 className="text-2xl font-semibold text-white sm:text-3xl">Everything you need, beautifully organised</h2>
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {features.map((feature, index) => {
               const Icon = feature.icon
               return (
-                <Card key={index} className="group h-full rounded-3xl border border-slate-100 bg-slate-50/80 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_25px_40px_-30px_rgba(15,23,42,0.45)]">
+                <Card key={index} className="group h-full rounded-3xl border border-white/10 bg-white/5 text-white shadow-[0_25px_45px_-40px_rgba(15,23,42,0.75)] transition hover:-translate-y-1">
                   <CardContent className="p-6">
                     <div className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${feature.color} text-white shadow-inner`}>
                       <Icon className="h-6 w-6" />
                     </div>
                     <div className="space-y-2">
-                      <h3 className="text-base font-semibold text-slate-900">{feature.title}</h3>
-                      <p className="text-sm text-slate-600">
+                      <h3 className="text-base font-semibold text-white/90">{feature.title}</h3>
+                      <p className="text-sm text-white/70">
                         {feature.description}
                       </p>
                     </div>
-                    <div className="mt-6 flex items-center gap-2 text-sm font-medium text-emerald-600">
+                    <div className="mt-6 flex items-center gap-2 text-sm font-medium text-white/80">
                       Explore
                       <ArrowUpRight className="h-4 w-4" />
                     </div>

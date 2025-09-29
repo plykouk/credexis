@@ -18,15 +18,11 @@ export default function RootLayout({
       <body>
         <Providers>
           <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
-            <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-              <div className="container flex h-14 max-w-screen-2xl items-center px-4">
-                <Link href="/" className="flex items-center space-x-2">
-                  <span className="font-bold text-xl bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-                    CREDEXIS
-                  </span>
-                </Link>
-              </div>
-            </header>
+            <div className="absolute inset-x-0 top-0 flex justify-center pt-6">
+              <Link href="/" className="flex items-center space-x-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white/90 backdrop-blur">
+                <span>CREDEXIS</span>
+              </Link>
+            </div>
             <main className="flex-1">{children}</main>
           </div>
         </Providers>
