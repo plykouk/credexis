@@ -133,7 +133,7 @@ export default function HomePage() {
               © {new Date().getFullYear()} CREDEXIS. Powered by Companies House API.
             </p>
             <p className="text-xs mt-2 text-slate-400">
-              Company data provided by the UK government's official register.
+              Company data provided by the UK government&apos;s official register.
             </p>
           </div>
         </div>

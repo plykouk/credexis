@@ -2,7 +2,7 @@
 // In production, consider using Redis or similar
 
 interface CacheEntry {
-  data: any
+  data: unknown
   expiry: number
 }
 
@@ -22,7 +22,7 @@ class Cache {
     }, 60000) // Clean every minute
   }
 
-  get(key: string): any | null {
+  get(key: string): unknown | null {
     const entry = this.store.get(key)
 
     if (!entry) {
@@ -37,7 +37,7 @@ class Cache {
     return entry.data
   }
 
-  set(key: string, data: any, ttlMs?: number): void {
+  set(key: string, data: unknown, ttlMs?: number): void {
     const ttl = ttlMs || this.defaultTTL
     this.store.set(key, {
       data,

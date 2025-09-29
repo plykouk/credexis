@@ -89,7 +89,7 @@ export function rateLimitMiddleware(request: NextRequest): NextResponse | null {
         status: 429,
         headers: {
           'X-RateLimit-Limit': RATE_LIMIT.toString(),
-          'X-RateLimit-Remaining': '0',
+          'X-RateLimit-Remaining': remaining.toString(),
           'X-RateLimit-Reset': resetTime.toString(),
           'Retry-After': retryAfter.toString()
         }
