@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
 
     // Handle axios errors with more detail
     if (error instanceof Error && 'response' in error) {
-      const axiosError = error as { response?: { status?: number; data?: any } }
+      const axiosError = error as { response?: { status?: number; data?: unknown } }
       console.error('API Response Error:', {
         status: axiosError.response?.status,
         data: axiosError.response?.data
