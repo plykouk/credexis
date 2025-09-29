@@ -1,7 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import CompaniesHouseAPI from '@/lib/companies-house-api'
+import { rateLimitMiddleware, addRateLimitHeaders } from '@/lib/rate-limiter'
+import cache, { getSearchCacheKey, CACHE_TTL } from '@/lib/cache'
 
 export async function GET(request: NextRequest) {
+  // Apply rate limiting
+  const rateLimitResponse = rateLimitMiddleware(request)
+  if (rateLimitResponse) {
+    return rateLimitResponse
+  }
+
   try {
     const searchParams = request.nextUrl.searchParams
     const query = searchParams.get('q')
@@ -14,6 +22,17 @@ export async function GET(request: NextRequest) {
         { error: 'Query parameter is required' },
         { status: 400 }
       )
+    }
+
+    // Check cache first
+    const cacheKey = getSearchCacheKey(query, searchType, itemsPerPage, startIndex)
+    const cachedData = cache.get(cacheKey)
+
+    if (cachedData) {
+      const response = NextResponse.json(cachedData)
+      response.headers.set('X-Cache', 'HIT')
+      response.headers.set('Cache-Control', 'public, max-age=300') // 5 minutes
+      return addRateLimitHeaders(response, request)
     }
 
     const api = new CompaniesHouseAPI()
@@ -40,7 +59,14 @@ export async function GET(request: NextRequest) {
       results = await api.advancedSearchCompanies(advancedParams)
     }
 
-    return NextResponse.json(results)
+    // Store in cache
+    cache.set(cacheKey, results, CACHE_TTL.SEARCH)
+
+    // Return response with cache and rate limit headers
+    const response = NextResponse.json(results)
+    response.headers.set('X-Cache', 'MISS')
+    response.headers.set('Cache-Control', 'public, max-age=300') // 5 minutes
+    return addRateLimitHeaders(response, request)
   } catch (error) {
     console.error('Search API Error:', error)
 

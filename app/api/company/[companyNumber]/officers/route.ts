@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { rateLimitMiddleware, addRateLimitHeaders } from '@/lib/rate-limiter'
+import cache, { getOfficersCacheKey, CACHE_TTL } from '@/lib/cache'
 
 const API_KEY = process.env.COMPANIES_HOUSE_API_KEY
 const API_URL = 'https://api.company-information.service.gov.uk'
@@ -7,6 +9,12 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ companyNumber: string }> }
 ) {
+  // Apply rate limiting
+  const rateLimitResponse = rateLimitMiddleware(request)
+  if (rateLimitResponse) {
+    return rateLimitResponse
+  }
+
   try {
     const { companyNumber } = await params
 
@@ -17,8 +25,19 @@ export async function GET(
       )
     }
 
+    // Check cache first
+    const cacheKey = getOfficersCacheKey(companyNumber, 25, 0)
+    const cachedData = cache.get(cacheKey)
+
+    if (cachedData) {
+      const response = NextResponse.json(cachedData)
+      response.headers.set('X-Cache', 'HIT')
+      response.headers.set('Cache-Control', 'public, max-age=600') // 10 minutes
+      return addRateLimitHeaders(response, request)
+    }
+
     // Fetch officers from Companies House API
-    const response = await fetch(
+    const apiResponse = await fetch(
       `${API_URL}/company/${companyNumber}/officers`,
       {
         headers: {
@@ -27,19 +46,26 @@ export async function GET(
       }
     )
 
-    if (!response.ok) {
-      if (response.status === 404) {
+    if (!apiResponse.ok) {
+      if (apiResponse.status === 404) {
         return NextResponse.json(
           { error: 'Company not found' },
           { status: 404 }
         )
       }
-      throw new Error(`API responded with status ${response.status}`)
+      throw new Error(`API responded with status ${apiResponse.status}`)
     }
 
-    const data = await response.json()
+    const data = await apiResponse.json()
 
-    return NextResponse.json(data)
+    // Store in cache
+    cache.set(cacheKey, data, CACHE_TTL.OFFICERS)
+
+    // Return response with cache and rate limit headers
+    const response = NextResponse.json(data)
+    response.headers.set('X-Cache', 'MISS')
+    response.headers.set('Cache-Control', 'public, max-age=600') // 10 minutes
+    return addRateLimitHeaders(response, request)
   } catch (error) {
     console.error('Error fetching officers:', error)
     return NextResponse.json(
