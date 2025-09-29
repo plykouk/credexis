@@ -83,9 +83,7 @@ export function ModernSearchBar({
         inactive: 'border-slate-200 bg-white/70 text-slate-600 hover:border-slate-300 hover:text-slate-900'
       }
 
-  const helperTextClasses = layout === 'stacked'
-    ? 'mt-3 text-xs text-white/70'
-    : 'mt-3 text-xs text-slate-500'
+  const helperTextClasses = 'mt-3 text-xs text-slate-500'
 
   return (
     <form onSubmit={handleSubmit} className={cn('w-full', className)}>
@@ -128,11 +126,13 @@ export function ModernSearchBar({
           })}
         </div>
 
-        <p className={helperTextClasses}>
-          {searchType === 'sic_code' && 'Use industry SIC codes like 47110 to pinpoint sectors.'}
-          {searchType === 'nature_of_business' && 'Describe the business type (e.g. software, retail, manufacturing).'}
-          {searchType === 'name' && 'Search by company name or registration number to get started.'}
-        </p>
+        {layout !== 'stacked' && (
+          <p className={helperTextClasses}>
+            {searchType === 'sic_code' && 'Use industry SIC codes like 47110 to pinpoint sectors.'}
+            {searchType === 'nature_of_business' && 'Describe the business type (e.g. software, retail, manufacturing).'}
+            {searchType === 'name' && 'Search by company name or registration number to get started.'}
+          </p>
+        )}
       </div>
     </form>
   )

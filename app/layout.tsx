@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import "./globals.css";
 import { Providers } from "./providers";
 
@@ -22,7 +23,7 @@ export default function RootLayout({
               href="/"
               className="absolute left-6 top-6 flex items-center gap-2 text-lg font-semibold uppercase tracking-wide text-white"
             >
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white">C</span>
+              <Image src="/credexis-logo.svg" alt="Credexis" width={32} height={32} priority />
               <span>Credexis</span>
             </Link>
             <main className="flex-1">{children}</main>
