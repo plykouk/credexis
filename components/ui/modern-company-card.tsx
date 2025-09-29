@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Building2, MapPin, Calendar, ArrowRight } from 'lucide-react'
+import { MapPin, Calendar, ArrowRight } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { formatDate, formatAddress } from '@/lib/utils'

@@ -59,8 +59,8 @@ class CompaniesHouseAPI {
       itemsPerPage?: number
       startIndex?: number
     }
-  ): Promise<any> {
-    const searchParams: any = {
+  ): Promise<CompanySearchResult> {
+    const searchParams: Record<string, string | number> = {
       items_per_page: params.itemsPerPage || 20,
       start_index: params.startIndex || 0,
     }

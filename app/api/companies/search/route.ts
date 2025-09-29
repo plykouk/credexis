@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
       results = await api.searchCompanies(query, itemsPerPage, startIndex)
     } else {
       // Advanced search by SIC code or nature of business
-      const advancedParams: any = {
+      const advancedParams: Record<string, string | number> = {
         itemsPerPage,
         startIndex
       }

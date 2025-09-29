@@ -26,7 +26,7 @@ export async function GET(
     )
 
     return NextResponse.json(filingHistory)
-  } catch (error: any) {
+  } catch (error) {
     console.error('Filing History API Error:', error)
 
     if (error.response?.status === 404) {

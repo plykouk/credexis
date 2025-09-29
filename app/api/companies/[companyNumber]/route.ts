@@ -19,7 +19,7 @@ export async function GET(
     const profile = await api.getCompanyProfile(companyNumber)
 
     return NextResponse.json(profile)
-  } catch (error: any) {
+  } catch (error) {
     console.error('Company Profile API Error:', error)
 
     if (error.response?.status === 404) {

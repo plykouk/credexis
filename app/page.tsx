@@ -1,10 +1,9 @@
 'use client'
 
-import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ModernSearchBar, SearchType } from '@/components/ui/modern-search-bar'
 import { Card, CardContent } from '@/components/ui/card'
-import { Building2, TrendingUp, FileText, Users, Search, BarChart3, Shield, Zap } from 'lucide-react'
+import { Building2, TrendingUp, FileText, Users, Search, Shield, Zap } from 'lucide-react'
 
 export default function HomePage() {
   const router = useRouter()

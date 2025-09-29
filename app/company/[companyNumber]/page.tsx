@@ -11,9 +11,7 @@ import {
   Calendar,
   FileText,
   Users,
-  Loader2,
-  ExternalLink,
-  Download
+  Loader2
 } from 'lucide-react'
 import { formatDate, formatAddress, getCompanyStatusColor } from '@/lib/utils'
 import type { FilingHistoryList, OfficerList } from '@/types/companies-house'

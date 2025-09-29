@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { Search, ChevronDown, Building2, Hash, Briefcase } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import {
   DropdownMenu,
   DropdownMenuContent,

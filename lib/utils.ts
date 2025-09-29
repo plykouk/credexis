@@ -18,7 +18,17 @@ export function formatDate(dateString: string | undefined): string {
   }).format(date)
 }
 
-export function formatAddress(address: any): string {
+interface Address {
+  premises?: string
+  address_line_1?: string
+  address_line_2?: string
+  locality?: string
+  region?: string
+  postal_code?: string
+  country?: string
+}
+
+export function formatAddress(address: Address | undefined | null): string {
   if (!address) return 'No address available'
 
   const parts = [

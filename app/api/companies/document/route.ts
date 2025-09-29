@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
         'Content-Disposition': `inline; filename="company-document.pdf"`,
       }
     })
-  } catch (error: any) {
+  } catch (error) {
     console.error('Document API Error:', error)
 
     if (error.response?.status === 404) {
