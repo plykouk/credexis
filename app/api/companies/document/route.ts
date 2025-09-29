@@ -59,11 +59,14 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Document API Error:', error)
 
-    if (error.response?.status === 404) {
-      return NextResponse.json(
-        { error: 'Document not found' },
-        { status: 404 }
-      )
+    if (error instanceof Error && 'response' in error) {
+      const axiosError = error as any
+      if (axiosError.response?.status === 404) {
+        return NextResponse.json(
+          { error: 'Document not found' },
+          { status: 404 }
+        )
+      }
     }
 
     return NextResponse.json(

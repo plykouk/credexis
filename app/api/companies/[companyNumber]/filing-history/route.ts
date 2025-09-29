@@ -29,11 +29,14 @@ export async function GET(
   } catch (error) {
     console.error('Filing History API Error:', error)
 
-    if (error.response?.status === 404) {
-      return NextResponse.json(
-        { error: 'Company not found' },
-        { status: 404 }
-      )
+    if (error instanceof Error && 'response' in error) {
+      const axiosError = error as any
+      if (axiosError.response?.status === 404) {
+        return NextResponse.json(
+          { error: 'Company not found' },
+          { status: 404 }
+        )
+      }
     }
 
     return NextResponse.json(
