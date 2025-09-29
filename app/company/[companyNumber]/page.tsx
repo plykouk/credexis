@@ -204,11 +204,11 @@ export default function CompanyDetailPage() {
           {activeTab === 'overview' && (
             <div className="space-y-6">
               {latestAccounts && latestAccounts.links?.document_metadata && (
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <div className="flex items-center justify-between">
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                     <div>
-                      <h4 className="text-sm font-semibold text-blue-900">Latest Accounts Available</h4>
-                      <p className="text-sm text-blue-700 mt-1">
+                      <h4 className="text-sm font-semibold text-green-900">Latest Accounts Available</h4>
+                      <p className="text-sm text-green-700 mt-1">
                         {latestAccounts.description_values?.made_up_date
                           ? `Made up to ${formatDate(latestAccounts.description_values.made_up_date)}`
                           : `Filed on ${formatDate(latestAccounts.date)}`}
@@ -220,7 +220,7 @@ export default function CompanyDetailPage() {
                         const documentUrl = `/api/companies/document?url=${encodeURIComponent(latestAccounts.links?.document_metadata || '')}`
                         window.open(documentUrl, '_blank')
                       }}
-                      className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                      className="w-full sm:w-auto px-4 py-2 bg-green-700 text-white font-medium rounded-lg hover:bg-green-800 transition-colors flex items-center justify-center gap-2"
                       disabled={!latestAccounts.links?.document_metadata}
                     >
                       <FileText className="h-5 w-5" />

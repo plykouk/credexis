@@ -30,10 +30,10 @@ export function ModernCompanyCard({ company }: ModernCompanyCardProps) {
         <CardContent className="p-4 sm:p-5">
           <div className="flex justify-between items-start mb-3">
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-base sm:text-lg text-slate-900 truncate group-hover:text-blue-600 transition-colors">
+              <h3 className="font-semibold text-base sm:text-lg text-black truncate group-hover:text-green-700 transition-colors">
                 {company.title}
               </h3>
-              <p className="text-xs sm:text-sm text-slate-500 font-mono">
+              <p className="text-xs sm:text-sm text-black/60 font-mono">
                 {company.company_number}
               </p>
             </div>
@@ -47,23 +47,23 @@ export function ModernCompanyCard({ company }: ModernCompanyCardProps) {
 
           <div className="space-y-2">
             {company.address && (
-              <div className="flex items-start gap-2 text-xs sm:text-sm text-slate-600">
-                <MapPin className="h-3.5 w-3.5 mt-0.5 flex-shrink-0 text-slate-400" />
+              <div className="flex items-start gap-2 text-xs sm:text-sm text-black/70">
+                <MapPin className="h-3.5 w-3.5 mt-0.5 flex-shrink-0 text-black/40" />
                 <span className="line-clamp-2 leading-relaxed">
                   {formatAddress(company.address)}
                 </span>
               </div>
             )}
 
-            <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-600">
-              <Calendar className="h-3.5 w-3.5 flex-shrink-0 text-slate-400" />
+            <div className="flex items-center gap-2 text-xs sm:text-sm text-black/70">
+              <Calendar className="h-3.5 w-3.5 flex-shrink-0 text-black/40" />
               <span>Incorporated {formatDate(company.date_of_creation)}</span>
             </div>
           </div>
 
           <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-            <span className="text-xs text-slate-500">View details</span>
-            <ArrowRight className="h-4 w-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+            <span className="text-xs text-black/50">View details</span>
+            <ArrowRight className="h-4 w-4 text-black/40 group-hover:text-green-700 group-hover:translate-x-1 transition-all" />
           </div>
         </CardContent>
       </Card>
