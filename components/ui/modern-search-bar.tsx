@@ -62,7 +62,7 @@ export function ModernSearchBar({
   }
 
   const containerClasses = layout === 'stacked'
-    ? 'rounded-3xl border border-white/15 bg-white/10 p-4 backdrop-blur-lg'
+    ? 'rounded-3xl bg-white/15 p-4 backdrop-blur-lg'
     : 'rounded-3xl border border-slate-200/70 bg-white/90 p-4 shadow-[0_15px_35px_-25px_rgba(15,23,42,0.55)] backdrop-blur'
 
   const inputClasses = layout === 'stacked'
@@ -76,7 +76,7 @@ export function ModernSearchBar({
   const typeButtonClasses = layout === 'stacked'
     ? {
         active: 'border-transparent bg-white text-slate-900 shadow',
-        inactive: 'border-white/40 bg-white/10 text-white/80 hover:bg-white/20'
+        inactive: 'border-white/30 bg-white/5 text-white/80 hover:bg-white/15'
       }
     : {
         active: 'border-transparent bg-slate-900 text-white shadow',
