@@ -43,8 +43,40 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(results)
   } catch (error) {
     console.error('Search API Error:', error)
+
+    // Check if API key is configured
+    if (!process.env.COMPANIES_HOUSE_API_KEY) {
+      console.error('Missing COMPANIES_HOUSE_API_KEY environment variable')
+      return NextResponse.json(
+        { error: 'API key not configured. Please set COMPANIES_HOUSE_API_KEY environment variable.' },
+        { status: 500 }
+      )
+    }
+
+    // Handle axios errors with more detail
+    if (error instanceof Error && 'response' in error) {
+      const axiosError = error as { response?: { status?: number; data?: any } }
+      console.error('API Response Error:', {
+        status: axiosError.response?.status,
+        data: axiosError.response?.data
+      })
+
+      if (axiosError.response?.status === 401) {
+        return NextResponse.json(
+          { error: 'Authentication failed. Please check your API key.' },
+          { status: 401 }
+        )
+      }
+      if (axiosError.response?.status === 429) {
+        return NextResponse.json(
+          { error: 'Rate limit exceeded. Please try again later.' },
+          { status: 429 }
+        )
+      }
+    }
+
     return NextResponse.json(
-      { error: 'Failed to search companies' },
+      { error: 'Failed to search companies. Please try again.' },
       { status: 500 }
     )
   }
