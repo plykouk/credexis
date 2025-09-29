@@ -5,10 +5,10 @@ const API_URL = 'https://api.company-information.service.gov.uk'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { companyNumber: string } }
+  { params }: { params: Promise<{ companyNumber: string }> }
 ) {
   try {
-    const { companyNumber } = params
+    const { companyNumber } = await params
 
     if (!API_KEY) {
       return NextResponse.json(

@@ -3,10 +3,10 @@ import CompaniesHouseAPI from '@/lib/companies-house-api'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { companyNumber: string } }
+  { params }: { params: Promise<{ companyNumber: string }> }
 ) {
   try {
-    const { companyNumber } = params
+    const { companyNumber } = await params
     const searchParams = request.nextUrl.searchParams
     const itemsPerPage = parseInt(searchParams.get('items_per_page') || '25')
     const startIndex = parseInt(searchParams.get('start_index') || '0')
