@@ -67,24 +67,22 @@ export default function HomePage() {
               Search millions of UK companies. Access financial accounts, filing history, and director information instantly.
             </p>
 
-            <div className="max-w-2xl mx-auto mb-8">
+            <div className="max-w-2xl mx-auto">
               <ModernSearchBar onSearch={handleSearch} />
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-lg mx-auto mt-12">
-              {stats.map((stat) => {
-                const Icon = stat.icon
-                return (
-                  <div key={stat.label} className="text-center">
-                    <div className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-slate-100 mb-2">
-                      <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-slate-700" />
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mt-6">
+                {stats.map((stat) => {
+                  const Icon = stat.icon
+                  return (
+                    <div key={stat.label} className="text-center rounded-lg border border-slate-200 bg-white/80 p-4 shadow-sm">
+                      <div className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-slate-100 mb-2">
+                        <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-slate-700" />
+                      </div>
+                      <div className="text-xl sm:text-2xl font-bold text-black">{stat.value}</div>
+                      <div className="text-xs sm:text-sm text-black/70">{stat.label}</div>
                     </div>
-                    <div className="text-xl sm:text-2xl font-bold text-black">{stat.value}</div>
-                    <div className="text-xs sm:text-sm text-black/70">{stat.label}</div>
-                  </div>
-                )
-              })}
+                  )
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -102,7 +100,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
             {features.map((feature, index) => {
               const Icon = feature.icon
               return (

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
 import { Providers } from "./providers";
-import { Building2 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "CREDEXIS - UK Companies House Data",
@@ -22,7 +21,6 @@ export default function RootLayout({
             <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
               <div className="container flex h-14 max-w-screen-2xl items-center px-4">
                 <Link href="/" className="flex items-center space-x-2">
-                  <Building2 className="h-5 w-5 text-primary" />
                   <span className="font-bold text-xl bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
                     CREDEXIS
                   </span>
