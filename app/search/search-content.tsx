@@ -30,51 +30,60 @@ export default function SearchPageContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-      {/* Search Header */}
-      <div className="bg-white border-b border-slate-200">
-        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6">
-          <div className="max-w-4xl mx-auto">
-            <ModernSearchBar
-              onSearch={handleSearch}
-              defaultSearchType={searchType}
-            />
+    <div className="min-h-screen bg-slate-900">
+      <div className="relative overflow-hidden bg-gradient-to-b from-slate-900 via-slate-900/95 to-emerald-950 pb-20">
+        <div className="absolute inset-x-0 top-[-240px] h-[420px] rounded-full bg-emerald-500/25 blur-3xl" />
+        <div className="relative mx-auto w-full max-w-4xl px-4 pt-10 sm:px-6 sm:pt-14">
+          <div className="rounded-[36px] border border-white/10 bg-white/10 p-1.5 backdrop-blur">
+            <div className="rounded-[32px] border border-white/10 bg-white/10 p-5">
+              <div className="mb-6 flex items-center justify-between text-white/70">
+                <div>
+                  <h1 className="text-lg font-semibold text-white sm:text-xl">Search Companies</h1>
+                  <p className="text-xs sm:text-sm">Refine filters and explore filings in a mobile native layout.</p>
+                </div>
+                <div className="hidden rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium sm:inline-flex">
+                  Real-time from Companies House
+                </div>
+              </div>
+              <ModernSearchBar
+                onSearch={handleSearch}
+                defaultSearchType={searchType}
+              />
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Results Section */}
-      <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <div className="max-w-7xl mx-auto">
+      <div className="relative -mt-16 rounded-t-[36px] bg-white px-4 pb-16 pt-12 shadow-[0_-40px_80px_-60px_rgba(15,23,42,0.6)] sm:px-6">
+        <div className="mx-auto w-full max-w-6xl">
           {isLoading && (
             <div className="space-y-4">
               <div className="flex items-center justify-between mb-4">
                 <Skeleton className="h-6 w-48" />
                 <Skeleton className="h-6 w-24" />
               </div>
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                 {[...Array(6)].map((_, i) => (
-                  <Skeleton key={i} className="h-48 rounded-lg" />
+                  <Skeleton key={i} className="h-48 rounded-3xl" />
                 ))}
               </div>
             </div>
           )}
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-rose-700">
               An error occurred while searching. Please try again.
             </div>
           )}
 
           {data && (
             <>
-              {/* Results Header */}
-              <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+              <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <h1 className="text-lg sm:text-xl font-semibold text-slate-900">
+                  <h2 className="text-lg font-semibold text-slate-900 sm:text-xl">
                     Search Results
-                  </h1>
-                  <p className="text-sm text-slate-600 mt-1">
+                  </h2>
+                  <p className="mt-1 text-sm text-slate-500">
                     Found {data.total_results.toLocaleString()} companies
                     {searchType === 'sic_code' && ` with SIC code "${searchQuery}"`}
                     {searchType === 'nature_of_business' && ` for "${searchQuery}"`}
@@ -83,7 +92,7 @@ export default function SearchPageContent() {
                 </div>
 
                 {data.total_results > 0 && (
-                  <div className="flex items-center gap-2 text-sm text-slate-500">
+                  <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100 px-4 py-2 text-sm text-slate-600">
                     <Building2 className="h-4 w-4" />
                     <span>{data.items.length} of {data.total_results.toLocaleString()}</span>
                   </div>
@@ -91,24 +100,23 @@ export default function SearchPageContent() {
               </div>
 
               {data.items.length === 0 ? (
-                <div className="text-center py-12 sm:py-16">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-100 mb-4">
+                <div className="py-12 text-center sm:py-16">
+                  <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
                     <Search className="h-8 w-8 text-slate-400" />
                   </div>
-                  <h2 className="text-xl font-semibold text-slate-900 mb-2">No companies found</h2>
-                  <p className="text-slate-600 max-w-md mx-auto">
+                  <h3 className="mb-2 text-xl font-semibold text-slate-900">No companies found</h3>
+                  <p className="mx-auto max-w-md text-slate-500">
                     Try adjusting your search terms or using a different search type.
                   </p>
                 </div>
               ) : (
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                   {data.items.map((company) => (
                     <ModernCompanyCard key={company.company_number} company={company} />
                   ))}
                 </div>
               )}
 
-              {/* Pagination placeholder */}
               {data.total_results > data.items.length && (
                 <div className="mt-8 text-center">
                   <p className="text-sm text-slate-500">
