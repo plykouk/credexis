@@ -1,8 +1,6 @@
 'use client'
 
-import { useState } from 'react'
 import { useParams } from 'next/navigation'
-import Link from 'next/link'
 import { useCompanyProfile } from '@/hooks/use-company-profile'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
@@ -10,18 +8,23 @@ import {
   Building2,
   MapPin,
   Calendar,
+  FileText,
+  Users,
   Loader2,
-  ArrowLeft,
-  ChevronRight
+  Download,
+  ExternalLink,
+  TrendingUp,
+  Shield
 } from 'lucide-react'
 import { formatDate, formatAddress } from '@/lib/utils'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import type { FilingHistoryList, OfficerList } from '@/types/companies-house'
 
 export default function CompanyDetailPage() {
   const params = useParams()
   const companyNumber = params.companyNumber as string
-  const [activeTab, setActiveTab] = useState<'overview' | 'filings' | 'officers'>('overview')
 
   const { data: company, isLoading: companyLoading, error: companyError } = useCompanyProfile(companyNumber)
 
@@ -48,11 +51,11 @@ export default function CompanyDetailPage() {
   )
 
   const statusStyles: Record<string, string> = {
-    active: 'bg-green-50 text-green-700',
-    dissolved: 'bg-red-50 text-red-700',
-    liquidation: 'bg-yellow-50 text-yellow-700',
-    receivership: 'bg-yellow-50 text-yellow-700',
-    administration: 'bg-yellow-50 text-yellow-700',
+    active: 'bg-green-100 text-green-700',
+    dissolved: 'bg-red-100 text-red-700',
+    liquidation: 'bg-yellow-100 text-yellow-700',
+    receivership: 'bg-yellow-100 text-yellow-700',
+    administration: 'bg-yellow-100 text-yellow-700',
     dormant: 'bg-gray-100 text-gray-600'
   }
 
@@ -60,233 +63,278 @@ export default function CompanyDetailPage() {
 
   if (companyLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
-        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-gray-50 to-white">
+        <Loader2 className="h-8 w-8 animate-spin text-orange-600" />
       </div>
     )
   }
 
   if (companyError || !company) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
-        <div className="max-w-md rounded-xl border border-red-200 bg-red-50 px-6 py-5 text-center text-red-700">
-          Company not found or an error occurred.
-        </div>
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-gray-50 to-white">
+        <Card className="max-w-md border-red-200 bg-red-50">
+          <CardContent className="p-6 text-center text-red-700">
+            Company not found or an error occurred.
+          </CardContent>
+        </Card>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="mx-auto max-w-md px-4">
-        <div className="pt-6 pb-4">
-          <Link href="/search" className="inline-flex items-center gap-2 text-gray-600 mb-4">
-            <ArrowLeft className="h-4 w-4" />
-            <span className="text-sm">Back to search</span>
-          </Link>
-
-          <div className="space-y-3">
-            <h1 className="text-2xl font-semibold text-gray-900">
-              {company.company_name}
-            </h1>
-            <p className="text-sm text-gray-500">
-              Company number: {company.company_number}
-            </p>
-            <span className={`inline-flex rounded-md px-2 py-0.5 text-xs font-medium ${statusClass}`}>
-              {company.company_status}
-            </span>
-          </div>
-
-          <Card className="mt-4 border-gray-200 bg-white">
-            <CardContent className="p-4 space-y-3">
-              <div className="flex items-start gap-3">
-                <MapPin className="h-4 w-4 text-gray-400 mt-0.5" />
-                <div className="flex-1">
-                  <p className="text-xs text-gray-500 mb-1">Registered office</p>
-                  <p className="text-sm text-gray-700">{formatAddress(company.registered_office_address)}</p>
-                </div>
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      {/* Hero Section */}
+      <div className="border-b border-gray-200 bg-white">
+        <div className="container mx-auto px-4 py-12 lg:px-8">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+              <div>
+                <h1 className="mb-2 text-4xl font-bold text-gray-900">
+                  {company.company_name}
+                </h1>
+                <p className="text-lg text-gray-600">
+                  Company number: {company.company_number}
+                </p>
               </div>
-              <div className="flex items-center gap-3">
-                <Calendar className="h-4 w-4 text-gray-400" />
-                <div>
-                  <p className="text-xs text-gray-500">Incorporated</p>
-                  <p className="text-sm text-gray-700">{formatDate(company.date_of_creation)}</p>
-                </div>
+              <div className="flex items-center gap-2">
+                <span className={`rounded-full px-4 py-2 text-sm font-medium ${statusClass}`}>
+                  {company.company_status}
+                </span>
               </div>
-              <div className="flex items-center gap-3">
-                <Building2 className="h-4 w-4 text-gray-400" />
-                <div>
-                  <p className="text-xs text-gray-500">Company type</p>
-                  <p className="text-sm text-gray-700">{company.type || 'N/A'}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+            </div>
 
-        <nav className="flex items-center gap-1 border-b border-gray-200 mb-4">
-          {(['overview', 'filings', 'officers'] as const).map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 text-sm font-medium transition-colors ${
-                activeTab === tab
-                  ? 'text-blue-600 border-b-2 border-blue-600'
-                  : 'text-gray-500 hover:text-gray-700'
-              }`}
-            >
-              {tab === 'overview' && 'Overview'}
-              {tab === 'filings' && 'Filings'}
-              {tab === 'officers' && 'Officers'}
-            </button>
-          ))}
-        </nav>
-
-        <div className="pb-16">
-          {activeTab === 'overview' && (
-            <div className="space-y-3">
-              {latestAccounts && latestAccounts.links?.document_metadata && (
-                <Card className="border-blue-200 bg-blue-50">
-                  <CardContent className="p-4">
-                    <div className="space-y-3">
-                      <div>
-                        <p className="text-xs font-medium text-blue-700">Latest accounts</p>
-                        <p className="text-sm text-blue-600 mt-1">
-                          {latestAccounts.description_values?.made_up_date
-                            ? `Made up to ${formatDate(latestAccounts.description_values.made_up_date)}`
-                            : `Filed on ${formatDate(latestAccounts.date)}`}
-                        </p>
-                      </div>
-                      <button
-                        onClick={() => {
-                          const documentUrl = `/api/companies/document?url=${encodeURIComponent(latestAccounts.links?.document_metadata || '')}`
-                          window.open(documentUrl, '_blank')
-                        }}
-                        className="w-full rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
-                      >
-                        View accounts
-                      </button>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-
-              <Card className="border-gray-200 bg-white">
-                <CardContent className="p-4 space-y-3">
-                  <div>
-                    <p className="text-xs text-gray-500">Next accounts due</p>
-                    <p className={`text-sm font-medium ${company?.accounts?.overdue ? 'text-red-600' : 'text-gray-700'}`}>
-                      {company?.accounts?.next_due ? formatDate(company.accounts.next_due) : 'Not provided'}
-                    </p>
+            {/* Key Info Cards */}
+            <div className="grid gap-4 md:grid-cols-3">
+              <Card className="border-gray-200">
+                <CardContent className="flex items-start gap-3 p-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-100 text-orange-600">
+                    <MapPin className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500">Confirmation statement due</p>
-                    <p className="text-sm font-medium text-gray-700">
-                      {company?.confirmation_statement?.next_due ? formatDate(company.confirmation_statement.next_due) : 'Not provided'}
-                    </p>
+                    <p className="text-sm font-medium text-gray-500">Registered Office</p>
+                    <p className="text-sm text-gray-900">{formatAddress(company.registered_office_address)}</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-gray-200">
+                <CardContent className="flex items-start gap-3 p-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-100 text-orange-600">
+                    <Calendar className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500">SIC codes</p>
-                    <p className="text-sm font-medium text-gray-700">
-                      {company?.sic_codes && company.sic_codes.length > 0 ? company.sic_codes.join(', ') : 'Not supplied'}
-                    </p>
+                    <p className="text-sm font-medium text-gray-500">Incorporated</p>
+                    <p className="text-sm text-gray-900">{formatDate(company.date_of_creation)}</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-gray-200">
+                <CardContent className="flex items-start gap-3 p-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-100 text-orange-600">
+                    <Building2 className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">Company Type</p>
+                    <p className="text-sm text-gray-900">{company.type || 'N/A'}</p>
                   </div>
                 </CardContent>
               </Card>
             </div>
-          )}
+          </div>
+        </div>
+      </div>
 
-          {activeTab === 'filings' && (
-            <div>
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-12 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <Tabs defaultValue="overview" className="w-full">
+            <TabsList className="mb-8">
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="filings">Filing History</TabsTrigger>
+              <TabsTrigger value="officers">Officers</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="overview" className="space-y-6">
+              {latestAccounts && latestAccounts.links?.document_metadata && (
+                <Card className="border-orange-200 bg-orange-50">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-orange-700">
+                      <FileText className="h-5 w-5" />
+                      Latest Accounts Available
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <p className="text-sm text-gray-700">
+                      {latestAccounts.description_values?.made_up_date
+                        ? `Made up to ${formatDate(latestAccounts.description_values.made_up_date)}`
+                        : `Filed on ${formatDate(latestAccounts.date)}`}
+                      {latestAccounts.pages && ` • ${latestAccounts.pages} pages`}
+                    </p>
+                    <Button
+                      onClick={() => {
+                        const documentUrl = `/api/companies/document?url=${encodeURIComponent(latestAccounts.links?.document_metadata || '')}`
+                        window.open(documentUrl, '_blank')
+                      }}
+                      className="bg-orange-600 hover:bg-orange-700"
+                    >
+                      <Download className="mr-2 h-4 w-4" />
+                      View Latest Accounts
+                    </Button>
+                  </CardContent>
+                </Card>
+              )}
+
+              <div className="grid gap-6 md:grid-cols-2">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <TrendingUp className="h-5 w-5 text-orange-600" />
+                      Financial Information
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div>
+                      <p className="text-sm text-gray-500">Next accounts due</p>
+                      <p className={`font-medium ${company?.accounts?.overdue ? 'text-red-600' : 'text-gray-900'}`}>
+                        {company?.accounts?.next_due ? formatDate(company.accounts.next_due) : 'Not provided'}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Accounts status</p>
+                      <p className={`font-medium ${company?.accounts?.overdue ? 'text-red-600' : 'text-green-600'}`}>
+                        {company?.accounts?.overdue ? 'Overdue' : 'Up to date'}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Shield className="h-5 w-5 text-orange-600" />
+                      Compliance
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div>
+                      <p className="text-sm text-gray-500">Confirmation statement due</p>
+                      <p className="font-medium text-gray-900">
+                        {company?.confirmation_statement?.next_due ? formatDate(company.confirmation_statement.next_due) : 'Not provided'}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">SIC codes</p>
+                      <p className="font-medium text-gray-900">
+                        {company?.sic_codes && company.sic_codes.length > 0 ? company.sic_codes.join(', ') : 'Not supplied'}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="filings" className="space-y-4">
               {filingsLoading ? (
-                <div className="flex justify-center py-8">
-                  <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
+                <div className="flex justify-center py-12">
+                  <Loader2 className="h-6 w-6 animate-spin text-orange-600" />
                 </div>
               ) : filingHistory && filingHistory.items.length > 0 ? (
-                <div className="space-y-3">
-                  {filingHistory.items.map((filing) => {
-                    const documentMetadata = filing.links?.document_metadata
-
-                    return (
-                      <Card key={filing.transaction_id} className="border-gray-200 bg-white">
-                        <CardContent className="p-4">
-                          <div className="flex items-start justify-between">
-                            <div className="flex-1">
-                              <p className="text-sm font-medium text-gray-900">{filing.description}</p>
-                              <p className="text-xs text-gray-500 mt-1">
-                                {formatDate(filing.date)}
-                                {filing.pages && ` • ${filing.pages} pages`}
-                              </p>
-                            </div>
-                            {documentMetadata && (
-                              <button
-                                onClick={() => {
-                                  const documentUrl = `/api/companies/document?url=${encodeURIComponent(documentMetadata)}`
-                                  window.open(documentUrl, '_blank')
-                                }}
-                                className="ml-3"
-                              >
-                                <ChevronRight className="h-5 w-5 text-gray-400" />
-                              </button>
-                            )}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    )
-                  })}
-                </div>
-              ) : (
-                <p className="text-sm text-gray-500 text-center py-8">No filing history available</p>
-              )}
-            </div>
-          )}
-
-          {activeTab === 'officers' && (
-            <div>
-              {officersLoading ? (
-                <div className="flex justify-center py-8">
-                  <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
-                </div>
-              ) : officers && officers.items && officers.items.length > 0 ? (
-                <div className="space-y-3">
-                  <div className="text-sm text-gray-500 mb-3">
-                    {officers.active_count} active • {officers.resigned_count || 0} resigned
-                  </div>
-                  {officers.items.map((officer, index) => (
-                    <Card key={index} className="border-gray-200 bg-white">
-                      <CardContent className="p-4">
-                        <div className="flex items-start justify-between">
-                          <div>
-                            <h4 className="text-sm font-medium text-gray-900">{officer.name}</h4>
-                            <p className="text-xs text-gray-500 mt-1 capitalize">
-                              {officer.officer_role.toLowerCase().replace(/_/g, ' ')}
+                <div className="space-y-4">
+                  {filingHistory.items.map((filing) => (
+                    <Card key={filing.transaction_id} className="border-gray-200">
+                      <CardContent className="flex items-start justify-between p-6">
+                        <div>
+                          <h3 className="font-medium text-gray-900">{filing.description}</h3>
+                          <p className="mt-1 text-sm text-gray-500">
+                            {formatDate(filing.date)} • {filing.type}
+                            {filing.pages && ` • ${filing.pages} pages`}
+                          </p>
+                          {filing.description_values?.made_up_date && (
+                            <p className="mt-1 text-sm text-gray-500">
+                              Made up to {formatDate(filing.description_values.made_up_date)}
                             </p>
-                            {officer.appointed_on && (
-                              <p className="text-xs text-gray-500 mt-1">
-                                Appointed {formatDate(officer.appointed_on)}
-                              </p>
-                            )}
-                            {officer.resigned_on && (
-                              <p className="text-xs text-red-600 mt-1">
-                                Resigned {formatDate(officer.resigned_on)}
-                              </p>
-                            )}
-                          </div>
-                          {!officer.resigned_on && (
-                            <span className="inline-flex rounded-md bg-green-50 px-2 py-0.5 text-xs font-medium text-green-700">
-                              Active
-                            </span>
                           )}
                         </div>
+                        {filing.links?.document_metadata && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              const documentUrl = `/api/companies/document?url=${encodeURIComponent(filing.links?.document_metadata || '')}`
+                              window.open(documentUrl, '_blank')
+                            }}
+                          >
+                            <ExternalLink className="h-4 w-4" />
+                          </Button>
+                        )}
                       </CardContent>
                     </Card>
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-gray-500 text-center py-8">No officers information available</p>
+                <p className="text-center text-gray-500">No filing history available.</p>
               )}
-            </div>
-          )}
+            </TabsContent>
+
+            <TabsContent value="officers" className="space-y-4">
+              {officersLoading ? (
+                <div className="flex justify-center py-12">
+                  <Loader2 className="h-6 w-6 animate-spin text-orange-600" />
+                </div>
+              ) : officers && officers.items && officers.items.length > 0 ? (
+                <>
+                  <div className="mb-4 flex items-center justify-between">
+                    <h3 className="text-lg font-semibold text-gray-900">Current & Previous Officers</h3>
+                    <div className="rounded-lg bg-gray-100 px-3 py-1.5 text-sm text-gray-600">
+                      {officers.active_count || 0} active • {officers.resigned_count || 0} resigned
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    {officers.items.map((officer, index) => (
+                      <Card key={index} className="border-gray-200">
+                        <CardContent className="flex items-start justify-between p-6">
+                          <div className="flex gap-4">
+                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 text-gray-600">
+                              <Users className="h-6 w-6" />
+                            </div>
+                            <div className="space-y-1">
+                              <h4 className="font-semibold text-gray-900">{officer.name}</h4>
+                              <p className="text-sm text-gray-600 capitalize">
+                                {officer.officer_role.toLowerCase().replace(/_/g, ' ')}
+                              </p>
+                              {officer.appointed_on && (
+                                <p className="text-sm text-gray-500">
+                                  Appointed: {formatDate(officer.appointed_on)}
+                                </p>
+                              )}
+                              {officer.resigned_on && (
+                                <p className="text-sm text-red-600">
+                                  Resigned: {formatDate(officer.resigned_on)}
+                                </p>
+                              )}
+                              {officer.address && (
+                                <p className="text-sm text-gray-500">
+                                  {formatAddress(officer.address)}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                          {!officer.resigned_on && (
+                            <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">
+                              Active
+                            </span>
+                          )}
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <p className="text-center text-gray-500">No officers information available.</p>
+              )}
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </div>

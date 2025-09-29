@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import { MapPin, ChevronRight } from 'lucide-react'
+import { MapPin, Calendar, ArrowRight, Building2 } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
-import { formatAddress } from '@/lib/utils'
+import { formatDate, formatAddress } from '@/lib/utils'
 import type { CompanySearchItem } from '@/types/companies-house'
 
 interface ModernCompanyCardProps {
@@ -12,9 +12,9 @@ export function ModernCompanyCard({ company }: ModernCompanyCardProps) {
   const status = company.company_status.toLowerCase()
 
   const statusStyles = {
-    active: 'bg-green-50 text-green-700',
-    dissolved: 'bg-red-50 text-red-700',
-    liquidation: 'bg-yellow-50 text-yellow-700',
+    active: 'bg-green-100 text-green-700',
+    dissolved: 'bg-red-100 text-red-700',
+    liquidation: 'bg-yellow-100 text-yellow-700',
   } as const
 
   const badgeClass =
@@ -22,30 +22,43 @@ export function ModernCompanyCard({ company }: ModernCompanyCardProps) {
 
   return (
     <Link href={`/company/${company.company_number}`}>
-      <Card className="border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md">
-        <CardContent className="flex items-center justify-between p-4">
-          <div className="min-w-0 flex-1">
-            <h3 className="font-medium text-gray-900 truncate">
-              {company.title}
-            </h3>
-            <p className="text-xs text-gray-500 mt-1">
-              {company.company_number}
-            </p>
-            <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
-              {company.address && (
-                <div className="flex items-center gap-1 truncate">
-                  <MapPin className="h-3 w-3" />
-                  <span className="truncate">{formatAddress(company.address)}</span>
-                </div>
-              )}
+      <Card className="group h-full border-gray-200 bg-white transition-all hover:shadow-lg">
+        <CardContent className="p-6">
+          <div className="mb-4 flex items-start justify-between">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-100 text-orange-600">
+              <Building2 className="h-6 w-6" />
             </div>
-            <div className="mt-2">
-              <span className={`inline-flex rounded-md px-2 py-0.5 text-xs font-medium ${badgeClass}`}>
-                {company.company_status}
-              </span>
+            <span className={`rounded-full px-3 py-1 text-xs font-medium ${badgeClass}`}>
+              {company.company_status}
+            </span>
+          </div>
+
+          <h3 className="mb-2 line-clamp-2 text-lg font-semibold text-gray-900 group-hover:text-orange-600">
+            {company.title}
+          </h3>
+
+          <p className="mb-4 font-mono text-sm text-gray-500">
+            {company.company_number}
+          </p>
+
+          <div className="space-y-2 text-sm text-gray-600">
+            {company.address && (
+              <div className="flex items-start gap-2">
+                <MapPin className="mt-0.5 h-4 w-4 text-gray-400" />
+                <span className="line-clamp-2">{formatAddress(company.address)}</span>
+              </div>
+            )}
+
+            <div className="flex items-center gap-2">
+              <Calendar className="h-4 w-4 text-gray-400" />
+              <span>Incorporated {formatDate(company.date_of_creation)}</span>
             </div>
           </div>
-          <ChevronRight className="h-5 w-5 text-gray-400 flex-shrink-0" />
+
+          <div className="mt-4 flex items-center text-sm font-medium text-orange-600 opacity-0 transition-opacity group-hover:opacity-100">
+            View details
+            <ArrowRight className="ml-1 h-4 w-4" />
+          </div>
         </CardContent>
       </Card>
     </Link>

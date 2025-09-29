@@ -12,7 +12,7 @@ interface ModernSearchBarProps {
   onSearch: (query: string, searchType: SearchType) => void
   className?: string
   defaultSearchType?: SearchType
-  layout?: 'default' | 'stacked' | 'light'
+  layout?: 'default' | 'stacked' | 'light' | 'hero'
 }
 
 const searchTypes = [
@@ -61,25 +61,36 @@ export function ModernSearchBar({
     }
   }
 
-  const containerClasses = layout === 'light'
+  const containerClasses = layout === 'hero'
+    ? 'rounded-2xl bg-white border border-gray-200 p-6 shadow-xl'
+    : layout === 'light'
     ? 'rounded-2xl bg-white border border-gray-200 p-4 shadow-sm'
     : layout === 'stacked'
     ? 'rounded-3xl bg-white/15 p-4 backdrop-blur-lg'
     : 'rounded-3xl border border-slate-200/70 bg-white/90 p-4 shadow-[0_15px_35px_-25px_rgba(15,23,42,0.55)] backdrop-blur'
 
-  const inputClasses = layout === 'light'
+  const inputClasses = layout === 'hero'
+    ? 'h-14 w-full rounded-xl border border-gray-200 bg-white pl-14 pr-4 text-lg text-gray-900 placeholder-gray-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20'
+    : layout === 'light'
     ? 'h-12 w-full rounded-xl border border-gray-200 bg-gray-50 pl-12 pr-4 text-base text-gray-900 placeholder-gray-500 focus:bg-white focus:border-blue-500 focus-visible:ring-0'
     : layout === 'stacked'
     ? 'h-12 w-full rounded-2xl border-none bg-white/80 pl-12 pr-4 text-base text-slate-900 shadow-sm focus-visible:ring-2 focus-visible:ring-emerald-500'
     : 'h-12 w-full rounded-full border-none bg-slate-100/60 pl-12 pr-4 text-base text-slate-900 shadow-inner focus-visible:ring-2 focus-visible:ring-emerald-500'
 
-  const buttonClasses = layout === 'light'
+  const buttonClasses = layout === 'hero'
+    ? 'h-14 w-full sm:w-auto rounded-xl bg-orange-600 px-8 text-white text-base font-medium transition hover:bg-orange-700'
+    : layout === 'light'
     ? 'h-12 w-full rounded-xl bg-blue-600 text-white text-base font-medium transition hover:bg-blue-700'
     : layout === 'stacked'
     ? 'h-12 w-full rounded-2xl bg-gradient-to-r from-emerald-500 to-green-600 text-base font-semibold shadow-[0_20px_40px_-25px_rgba(16,185,129,0.8)] transition hover:from-emerald-600 hover:to-green-700'
     : 'h-12 w-full rounded-full bg-gradient-to-r from-emerald-500 to-green-600 text-base font-semibold shadow-[0_10px_30px_-15px_rgba(16,185,129,0.9)] transition hover:from-emerald-600 hover:to-green-700'
 
-  const typeButtonClasses = layout === 'light'
+  const typeButtonClasses = layout === 'hero'
+    ? {
+        active: 'border-orange-600 bg-orange-50 text-orange-600',
+        inactive: 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50'
+      }
+    : layout === 'light'
     ? {
         active: 'border-blue-600 bg-blue-50 text-blue-600',
         inactive: 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50'
@@ -99,9 +110,9 @@ export function ModernSearchBar({
   return (
     <form onSubmit={handleSubmit} className={cn('w-full', className)}>
       <div className={containerClasses}>
-        <div className="flex flex-col gap-3">
+        <div className={layout === 'hero' ? 'flex flex-col gap-4 sm:flex-row sm:gap-3' : 'flex flex-col gap-3'}>
           <div className="relative w-full">
-            <Search className={cn('pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4', layout === 'light' ? 'text-gray-400' : 'text-slate-400')} />
+            <Search className={cn('pointer-events-none absolute left-4 top-1/2 -translate-y-1/2', layout === 'hero' ? 'h-5 w-5 text-gray-400' : 'h-4 w-4', layout === 'light' || layout === 'hero' ? 'text-gray-400' : 'text-slate-400')} />
             <Input
               type="text"
               value={query}

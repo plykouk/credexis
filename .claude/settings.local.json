@@ -19,7 +19,10 @@
       "Bash(tasklist)",
       "Bash(findstr:*)",
       "Bash(npx tsc:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(npm run lint)",
+      "WebFetch(domain:factory.ai)",
+      "Bash(npm run precommit:*)"
     ],
     "deny": [],
     "ask": []

@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import Image from "next/image";
+import { IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import { Navbar } from "@/components/layout/navbar";
+
+const ibmPlexSans = IBM_Plex_Sans({
+  weight: ['300', '400', '500', '600', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: "CREDEXIS - UK Companies House Data",
@@ -16,16 +22,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className={ibmPlexSans.className}>
         <Providers>
-          <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
-            <Link
-              href="/"
-              className="absolute left-6 top-6 flex items-center gap-2 text-lg font-semibold uppercase tracking-wide text-white"
-            >
-              <Image src="/credexis-logo.svg" alt="Credexis" width={32} height={32} priority />
-              <span>Credexis</span>
-            </Link>
+          <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+            <Navbar />
             <main className="flex-1">{children}</main>
           </div>
         </Providers>
