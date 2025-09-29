@@ -20,9 +20,10 @@ export default function RootLayout({
           <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
             <Link
               href="/"
-              className="absolute left-6 top-6 text-lg font-semibold uppercase tracking-wide text-white"
+              className="absolute left-6 top-6 flex items-center gap-2 text-lg font-semibold uppercase tracking-wide text-white"
             >
-              CREDEXIS
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white">C</span>
+              <span>Credexis</span>
             </Link>
             <main className="flex-1">{children}</main>
           </div>

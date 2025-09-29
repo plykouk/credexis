@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { ModernSearchBar, SearchType } from '@/components/ui/modern-search-bar'
 import { Card, CardContent } from '@/components/ui/card'
-import { Building2, TrendingUp, FileText, Users, Shield, Zap, Sparkles, ArrowUpRight } from 'lucide-react'
+import { Building2, TrendingUp, FileText, Users, Zap, Sparkles, ArrowUpRight } from 'lucide-react'
 
 export default function HomePage() {
   const router = useRouter()
@@ -11,12 +11,6 @@ export default function HomePage() {
   const handleSearch = (query: string, searchType: SearchType) => {
     router.push(`/search?q=${encodeURIComponent(query)}&search_type=${searchType}`)
   }
-
-  const quickSuggestions: Array<{ label: string; value: string; type: SearchType }> = [
-    { label: 'Fintech scaleups', value: 'fintech', type: 'nature_of_business' },
-    { label: 'SIC 62012', value: '62012', type: 'sic_code' },
-    { label: 'Climate tech', value: 'climate', type: 'nature_of_business' }
-  ]
 
   const features = [
     {
@@ -58,18 +52,12 @@ export default function HomePage() {
         <div className="absolute inset-y-0 right-[-160px] w-[380px] bg-emerald-400/20 blur-3xl" />
         <div className="relative mx-auto flex w-full max-w-6xl justify-center px-4 pt-12 pb-20 sm:px-6 sm:pb-28">
           <div className="w-full max-w-xl space-y-8 text-center">
-            <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-1 text-xs font-medium text-white/90 backdrop-blur">
-              <Shield className="h-4 w-4" />
-              Official Companies House partner experience
-            </div>
-
             <h1 className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
               Your mobile command centre for UK company data
             </h1>
 
-            <div className="rounded-[32px] border border-white/10 bg-white/5 p-1.5 text-left backdrop-blur-lg">
-              <div className="rounded-[28px] border border-white/10 bg-white/5 p-5">
-                <div className="flex items-start gap-3">
+            <div className="rounded-[32px] bg-white/10 p-5 text-left backdrop-blur-lg">
+              <div className="flex items-start gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/20 text-emerald-200">
                     <Sparkles className="h-5 w-5" />
                   </div>
@@ -78,18 +66,6 @@ export default function HomePage() {
 
                 <div className="mt-6">
                   <ModernSearchBar onSearch={handleSearch} layout="stacked" />
-                  <div className="mt-4 flex flex-wrap justify-center gap-2">
-                    {quickSuggestions.map((item) => (
-                      <button
-                        key={item.label}
-                        type="button"
-                        onClick={() => handleSearch(item.value, item.type)}
-                        className="rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/80 transition hover:bg-white/20"
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                  </div>
                 </div>
 
                 <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -106,7 +82,6 @@ export default function HomePage() {
                     )
                   })}
                 </div>
-              </div>
             </div>
           </div>
         </div>
