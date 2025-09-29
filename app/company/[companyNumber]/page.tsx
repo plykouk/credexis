@@ -217,10 +217,11 @@ export default function CompanyDetailPage() {
                     </div>
                     <button
                       onClick={() => {
-                        const documentUrl = `/api/companies/document?url=${encodeURIComponent(latestAccounts.links.document_metadata!)}`
+                        const documentUrl = `/api/companies/document?url=${encodeURIComponent(latestAccounts.links?.document_metadata || '')}`
                         window.open(documentUrl, '_blank')
                       }}
                       className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                      disabled={!latestAccounts.links?.document_metadata}
                     >
                       <FileText className="h-5 w-5" />
                       View Latest Accounts
