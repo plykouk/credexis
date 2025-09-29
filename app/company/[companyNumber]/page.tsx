@@ -257,12 +257,12 @@ export default function CompanyDetailPage() {
                       <CardContent className="flex items-start justify-between p-6">
                         <div>
                           <h3 className="text-lg font-semibold text-brand">{formatFilingDescription(filing.description)}</h3>
-                          <p className="mt-1 text-base text-gray-500">
+                          <p className="mt-1 mb-4 text-base text-gray-500">
                             {formatDate(filing.date)} • {filing.type}
                             {filing.pages && ` • ${filing.pages} pages`}
                           </p>
                           {filing.description_values?.made_up_date && (
-                            <p className="mt-1 text-base text-gray-500">
+                            <p className="mt-1 mb-4 text-base text-gray-500">
                               Made up to {formatDate(filing.description_values.made_up_date)}
                             </p>
                           )}
