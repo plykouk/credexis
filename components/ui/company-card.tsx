@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Building2, MapPin, Calendar, ArrowRight } from 'lucide-react'
+import { MapPin, Calendar, ArrowRight } from 'lucide-react'
 import { formatDate, formatAddress } from '@/lib/utils'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -52,15 +52,6 @@ export function CompanyCard({ company }: CompanyCardProps) {
               Incorporated {formatDate(company.date_of_creation)}
             </span>
           </div>
-
-          {company.sic_codes && company.sic_codes.length > 0 && (
-            <div className="flex items-center gap-2 text-sm">
-              <Building2 className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
-              <span className="text-muted-foreground">
-                SIC: {company.sic_codes.join(', ')}
-              </span>
-            </div>
-          )}
 
           <div className="flex items-center justify-end pt-2 text-primary">
             <span className="text-xs font-medium">View Details</span>
