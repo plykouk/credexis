@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { ModernSearchBar, SearchType } from '@/components/ui/modern-search-bar'
 import { Card, CardContent } from '@/components/ui/card'
-import { Building2, TrendingUp, FileText, Users, Search, Shield, Zap } from 'lucide-react'
+import { Building2, TrendingUp, FileText, Users, Shield, Zap } from 'lucide-react'
 
 export default function HomePage() {
   const router = useRouter()
@@ -125,38 +125,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Search Examples */}
-      <section className="py-12 sm:py-16 bg-gradient-to-b from-white to-slate-50">
+      {/* Footer */}
+      <footer className="bg-slate-900 text-slate-300 py-8 mt-auto">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-8">
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3">
-              Popular Searches
-            </h2>
-            <p className="text-sm sm:text-base text-slate-600">
-              Quick access to well-known UK companies
+          <div className="text-center">
+            <p className="text-sm">
+              © {new Date().getFullYear()} CREDEXIS. Powered by Companies House API.
+            </p>
+            <p className="text-xs mt-2 text-slate-400">
+              Company data provided by the UK government's official register.
             </p>
           </div>
-
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 max-w-3xl mx-auto">
-            {['Tesco PLC', 'Sainsbury\'s', 'ASDA', 'John Lewis', 'Marks & Spencer', 'British Airways', 'Vodafone', 'BP'].map((company) => (
-              <button
-                key={company}
-                onClick={() => handleSearch(company, 'name')}
-                className="px-3 sm:px-4 py-2 bg-white border border-slate-200 rounded-lg text-xs sm:text-sm text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-all"
-              >
-                {company}
-              </button>
-            ))}
-          </div>
-
-          <div className="mt-8 text-center">
-            <div className="inline-flex items-center gap-2 text-xs sm:text-sm text-slate-500">
-              <Search className="h-3.5 w-3.5" />
-              <span>Search by company name, SIC code, or business type</span>
-            </div>
-          </div>
         </div>
-      </section>
+      </footer>
+
     </div>
   )
 }
